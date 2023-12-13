@@ -16,6 +16,9 @@ jobs:
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
     steps:
+      - name: Output information
+        run: |
+          echo "my MONGODB_USERNAME: $MONGODB_USERNAME"
       - name: Get Code
         uses: actions/checkout@v3
       - name: Cache dependencies
@@ -29,9 +32,6 @@ jobs:
         run: npm start & npx wait-on http://127.0.0.1:$PORT
       - name: Run tests
         run: npm test
-      - name: Output information
-        run: |
-          echo "my MONGODB_USERNAME: $MONGODB_USERNAME"
   deploy:
     needs: test
     runs-on: ubuntu-latest
